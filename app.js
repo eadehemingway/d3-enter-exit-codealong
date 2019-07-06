@@ -11,7 +11,7 @@ const add = document.querySelector('#add');
 
 add.addEventListener('click', () => {
   const input = document.createElement('input');
-  input.classList.add('pink-border', 'node-inputs');
+  input.classList.add('input-box', 'node-inputs');
   const container = document.querySelector('#input-container');
   container.appendChild(input);
 });

@@ -7,8 +7,8 @@
   float: left;
 }
 
-.pink-border {
-  border: 1px solid pink;
+.input-box {
+  border: 1px solid coral;
   display: block;
   margin: 20px;
   width: 30px;
@@ -22,28 +22,24 @@
 }
 
 .add-input-btn,
-.delete-input-btn {
+.delete-input-btn,
+.update-input-btn {
   border: 2px solid coral;
-  border-radius: 50%;
   height: 40px;
-  width: 40px;
   margin: 1rem;
   font-size: 1rem;
   background: white;
   color: coral;
   outline: none;
 }
-
+.add-input-btn,
+.delete-input-btn {
+  border-radius: 50%;
+  width: 40px;
+}
 .update-input-btn {
-  border: 2px solid coral;
   border-radius: 8%;
-  height: 40px;
   width: 100px;
-  margin: 1rem;
-  font-size: 1rem;
-  background: white;
-  color: coral;
-  outline: none;
 }
 
 .fill-input-btn {
