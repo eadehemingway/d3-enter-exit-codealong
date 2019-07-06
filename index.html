@@ -9,13 +9,20 @@
   </head>
 
   <body>
-    <div id="chart">
-      <div id="input-container"></div>
+    <div id="chart-container">
+      <div id="control-box">
+        <div id="input-container"></div>
+        <button id="fill" class="fill-input-btn">FILL RANDOMLY</button>
+      </div>
+      <div id="chart"></div>
     </div>
 
-    <button id="add" class="add-button">ADD INPUT BOX</button>
-    <button id="update" class="update-button">UPDATE</button>
-    <button id="exit" class="exit-button red-border">EXIT INPUT</button>
+    <div class="button-container">
+      <button id="add" class="add-input-btn">+</button>
+      <button id="exit" class="delete-input-btn red-border">-</button>
+
+      <button id="update" class="update-input-btn">UPDATE</button>
+    </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="./app.js"></script>
   </body>

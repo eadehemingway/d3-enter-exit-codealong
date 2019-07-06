@@ -1,8 +1,11 @@
+const svgWidth = 700;
+const svgHeight = 500;
+
 const svg = d3
   .select('#chart')
   .append('svg')
-  .attr('width', 700)
-  .attr('height', 500);
+  .attr('width', svgWidth)
+  .attr('height', svgHeight);
 
 const add = document.querySelector('#add');
 
@@ -11,6 +14,16 @@ add.addEventListener('click', () => {
   input.classList.add('pink-border', 'node-inputs');
   const container = document.querySelector('#input-container');
   container.appendChild(input);
+});
+
+const fill = document.querySelector('#fill');
+
+fill.addEventListener('click', () => {
+  const inputs = document.querySelectorAll('.node-inputs');
+  inputs.forEach(e => {
+    const randomNum = Math.floor(Math.random() * (200 - 1) + 1);
+    e.value = randomNum;
+  });
 });
 
 const exit = document.querySelector('#exit');
@@ -34,8 +47,8 @@ update.addEventListener('click', () => {
     .enter()
     .append('circle')
     .attr('class', 'circles')
-    .attr('cx', '350')
-    .attr('cy', '150')
+    .attr('cx', svgWidth / 2)
+    .attr('cy', svgHeight / 2)
     .attr('r', '0')
     .attr('stroke', 'salmon')
     .attr('stroke-width', 2)
@@ -46,7 +59,7 @@ update.addEventListener('click', () => {
   updatedSelection
     .transition()
     .duration(1500)
-    .attr('r', d => d);
+    .attr('r', d => (Number.isInteger(d) ? d : 0));
 
   existingCircles
     .exit()
