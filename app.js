@@ -13,33 +13,24 @@ add.addEventListener('click', () => {
   container.appendChild(input);
 });
 
+const exit = document.querySelector('#exit');
+
+exit.addEventListener('click', () => {
+  const inputs = document.querySelectorAll('.node-inputs');
+  const lastInput = inputs[inputs.length - 1];
+  lastInput.parentNode.removeChild(lastInput);
+});
+
 const update = document.querySelector('#update');
 
 update.addEventListener('click', () => {
   const values = [];
   const inputs = document.querySelectorAll('.node-inputs');
   inputs.forEach(d => values.push(parseFloat(d.value)));
-  redraw(values);
-});
 
-const exit = document.querySelector('#exit');
+  const existingCircles = svg.selectAll('circle').data(values);
 
-exit.addEventListener('click', () => {
-  let values = [];
-  const inputs = document.querySelectorAll('.node-inputs');
-  inputs.forEach(d => values.push(parseFloat(d.value)));
-  values.pop();
-  redraw([...values, 0]);
-  setTimeout(() => redraw(values), 1500);
-  inputs[inputs.length - 1].remove();
-});
-
-const redraw = data => {
-  const currentSelection = svg.selectAll('circle').data(data);
-
-  currentSelection.exit().remove();
-
-  const enteringCircles = currentSelection
+  const enteringCircles = existingCircles
     .enter()
     .append('circle')
     .attr('class', 'circles')
@@ -50,10 +41,17 @@ const redraw = data => {
     .attr('stroke-width', 2)
     .attr('fill', 'none');
 
-  const updatedSelection = currentSelection.merge(enteringCircles);
+  const updatedSelection = existingCircles.merge(enteringCircles);
 
   updatedSelection
     .transition()
     .duration(1500)
     .attr('r', d => d);
-};
+
+  existingCircles
+    .exit()
+    .transition()
+    .duration(1500)
+    .attr('r', 0)
+    .remove();
+});
