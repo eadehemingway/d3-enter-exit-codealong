@@ -1,5 +1,7 @@
 # D3 workshop - P2 - enter, exit and update
 
+![](./radar-gif.gif)
+
 #### step one - svg and add input button, remove input button and fill button
 
 ```js
