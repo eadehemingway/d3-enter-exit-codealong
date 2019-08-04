@@ -1,0 +1,10 @@
+
+# Dependency directories
+node_modules/
+jspm_packages/
+public/dist
+
+
+# dotenv environment variables file
+.env
+

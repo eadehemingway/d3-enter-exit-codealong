@@ -2,53 +2,32 @@
 
 ![](./radar-gif.gif)
 
-#### step one - svg and add input button, remove input button and fill button
+#### pre codealong - explain existing code
+
+we have inputValues in state, and this determines how many input boxes appear on the screen. The add button adds a value to this array, the remove button removes the last element of the array. The fillRandomly function fills each input randomly and the changeInput allows us to fill the value in ourselves if we wish to do so.
+
+#### step one - create the svg
+
+add variables to the class:
 
 ```js
-const svgWidth = 700;
-const svgHeight = 500;
+svgWidth = 700;
+svgHeight = 500;
+```
 
-const svg = d3
-  .select('#chart')
+then in componentDidMount
+
+```js
+d3.select('#chart')
   .append('svg')
   .attr('width', svgWidth)
   .attr('height', svgHeight);
-
-const add = document.querySelector('#add');
-
-add.addEventListener('click', () => {
-  const input = document.createElement('input');
-  input.classList.add('input-box', 'node-inputs');
-  const container = document.querySelector('#input-container');
-  container.appendChild(input);
-});
-
-const exit = document.querySelector('#exit');
-
-exit.addEventListener('click', () => {
-  const inputs = document.querySelectorAll('.node-inputs');
-  const lastInput = inputs[inputs.length - 1];
-  lastInput.parentNode.removeChild(lastInput);
-});
-
-const fill = document.querySelector('#fill');
-
-fill.addEventListener('click', () => {
-  const inputs = document.querySelectorAll('.node-inputs');
-  inputs.forEach(e => {
-    const randomNum = Math.floor(Math.random() * (200 - 1) + 1);
-    e.value = randomNum;
-  });
-});
 ```
 
 #### step two - update button for entering circles
 
 ```js
-update.addEventListener('click', () => {
-  const values = [];
-  const inputs = document.querySelectorAll('.node-inputs');
-  inputs.forEach(d => values.push(parseFloat(d.value)));
+ const {inputValues} = this.state
 
   const existingCircles = svg.selectAll('circle').data(values);
 
