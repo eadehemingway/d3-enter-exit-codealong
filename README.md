@@ -2,6 +2,14 @@
 
 ![](./radar-gif.gif)
 
+### to run the app for development
+
+in root
+
+```
+npm run dev-server
+```
+
 #### pre codealong - explain existing code
 
 we have inputValues in state, and this determines how many input boxes appear on the screen. The add button adds a value to this array, the remove button removes the last element of the array. The fillRandomly function fills each input randomly and the changeInput allows us to fill the value in ourselves if we wish to do so.
