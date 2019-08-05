@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "build:watch": "webpack --mode development --config webpack.config.js --watch "
+    "build:watch": "webpack --mode development --config webpack.config.js --watch ",
+    "dev-server": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
