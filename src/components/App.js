@@ -2,15 +2,22 @@ import React from 'react';
 import * as d3 from 'd3';
 
 export class App extends React.Component{
+  static defaultProps = {
+    svgWidth: 700,
+    svgHeight: 500,
+
+  }
     state = {
       inputValues:[]
     }
 
 componentDidMount(){  
 
+
 }
 
 draw=()=>{
+
 
 }
 

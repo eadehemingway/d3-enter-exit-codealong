@@ -2,50 +2,60 @@ import React from 'react';
 import * as d3 from 'd3';
 
 export class App extends React.Component{
-   svgWidth = 700;
-   svgHeight =500;
-   
+  static defaultProps = {
+    svgWidth: 700,
+    svgHeight: 500,
+
+  }
     state = {
       inputValues:[]
     }
 
 componentDidMount(){  
-d3
-    .select('#chart')
-    .append('svg')
-    .attr('width', this.svgWidth)
-    .attr('height', this.svgHeight);
+  const {svgHeight, svgWidth} = this.props
+  d3.select('#chart')
+  .append('svg')
+  .attr('width', svgWidth)
+  .attr('height', svgHeight);
+
 }
 
 draw=()=>{
-  const {inputValues} = this.state
+const {inputValues} = this.state
+const {svgHeight, svgWidth} = this.props
 
-  const existingCircles = d3.select('svg').selectAll('circle').data(inputValues);
+const svg = d3.select('svg')
+const circleSelection  = svg.selectAll('circle').data(inputValues)
 
-  const enteringCircles = existingCircles
-    .enter()
-    .append('circle')
-    .attr('class', 'circles')
-    .attr('cx', this.svgWidth / 2)
-    .attr('cy', this.svgHeight / 2)
-    .attr('r', '0')
-    .attr('stroke', 'salmon')
-    .attr('stroke-width', 2)
-    .attr('fill', 'none');
+console.log(circleSelection)
 
-  const updatedSelection = existingCircles.merge(enteringCircles);
+const enteringCircles = circleSelection
+  .enter()
+  .append('circle')
+  .attr('class', 'circles')
+  .attr('cx', svgWidth/2)
+  .attr('cy', svgHeight/2)
+  .attr('r', 0)
+  .attr('stroke', 'salmon')
+  .attr('stroke-width', 2)
+  .attr('fill', 'none')
 
-  updatedSelection
-    .transition()
-    .duration(1500)
-    .attr('r', d => (Number.isInteger(d) ? d : 0));
 
-  existingCircles
-    .exit()
-    .transition()
-    .duration(1500)
-    .attr('r', 0)
-    .remove();
+const updateSelection = circleSelection.merge(enteringCircles)
+
+updateSelection
+  .transition()
+  .duration(1500)
+  .attr('r', d=> (Number.isInteger(d) ? d: 0))
+
+
+  circleSelection
+  .exit() 
+  .transition() 
+  .duration(1500)
+  .attr('r', 0)
+  .remove(); 
+
 }
 
 addInput = () => {
@@ -68,9 +78,10 @@ changeInput = (val, i) => {
   inputs.splice(i, 1, val)
   this.setState({inputValues: inputs})
 }
+
+
   render(){
     const {inputValues} = this.state
-
     return (
       <section>
       <div id="chart-container">
@@ -87,7 +98,6 @@ changeInput = (val, i) => {
       <div className="button-container">
         <button id="add" className="add-input-btn" onClick={this.addInput}>+</button>
         <button id="exit" className="delete-input-btn red-border" onClick={this.removeInput}>-</button>
-  
         <button id="update" className="update-input-btn" onClick={this.draw}>UPDATE</button>
       </div>
     </section>
