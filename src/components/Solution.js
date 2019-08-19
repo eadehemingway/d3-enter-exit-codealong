@@ -28,6 +28,7 @@ const svg = d3.select('svg')
 const circleSelection  = svg.selectAll('circle').data(inputValues)
 
 console.log(circleSelection)
+console.log(circleSelection.enter())
 
 const enteringCircles = circleSelection
   .enter()

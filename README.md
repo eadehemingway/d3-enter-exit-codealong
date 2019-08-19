@@ -102,6 +102,23 @@ as before we add the transition between the selection and the code that is chang
 
 #### step three - make the update work for updating existing circles
 
+explain that a selection will always have {\_groups, \_parents} and what you do to this selection will happen to what you can see in the \_groups.
+
+When we have a selection that is bound to data it will also have the enter and exit methods on it.
+
+if we call enter or exit of this selection it returns a new selection. console.log circleSelection and circleSelection.enter():
+
+```js
+console.log(circleSelection);
+console.log(circleSelection.enter());
+```
+
+the \_groups array will always have as many elements in it as there are data points. Think of it like a teacher putting out as many chairs as is needed for the students that should be attending today. Some of these chairs may be empty (as some students may be late). When we need nodes to enter, there will be as many empty chairs in the \_groups array as there are nodes that need to enter. (think of entering nodes as always being a little bit late).
+
+so circleSelection.enter() returns the selection of the entering nodes, so everything that happens after this happens only to the nodes entering.
+
+whereas circleSelection returns the whole circle selection, which has the enter and exit method on it, but the selection is the \_groups array. So anything you do to circleSelection will only happen to the students already in their seats (i.e. the nodes already on the page)
+
 ```js
 circleSelection
   .transition()
