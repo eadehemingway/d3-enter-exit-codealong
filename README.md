@@ -29,11 +29,11 @@ add variables to the class:
 then in componentDidMount
 
 ```js
-const { svgHeight, svgWidth } = this.props;
+const { svgHeight, svgWidth } = this.props
 d3.select('#chart')
   .append('svg')
   .attr('width', svgWidth)
-  .attr('height', svgHeight);
+  .attr('height', svgHeight)
 ```
 
 #### step two - update button for entering circles (in draw func)
@@ -45,6 +45,7 @@ the redraw func is going to be triggered when we click the update button. it nee
 - update existing circles
 
 ```js
+// in draw func
  const {inputValues} = this.state
   const svg = d3.select('svg')
   const circleSelection = svg.selectAll('circle').data(inputValues);
@@ -77,7 +78,7 @@ circleSelection
   .attr('stroke', 'salmon')
   .attr('stroke-width', 2)
   .attr('fill', 'none')
-  .attr('r', d => d);
+  .attr('r', d => d)
 ```
 
 but this doesnt work! why? because the code runs so quickly that the circle hasnt had time to load with the first r value before the second one is registered, so to see the transition we need to add the transition() property. where shall we add it?
@@ -95,7 +96,7 @@ circleSelection
   .attr('fill', 'none')
   .transition()
   .duration(1500)
-  .attr('r', d => d);
+  .attr('r', d => d)
 ```
 
 as before we add the transition between the selection and the code that is changing the selection.
@@ -109,8 +110,8 @@ When we have a selection that is bound to data it will also have the enter and e
 if we call enter or exit of this selection it returns a new selection. console.log circleSelection and circleSelection.enter():
 
 ```js
-console.log(circleSelection);
-console.log(circleSelection.enter());
+console.log(circleSelection)
+console.log(circleSelection.enter())
 ```
 
 the \_groups array will always have as many elements in it as there are data points. Think of it like a teacher putting out as many chairs as is needed for the students that should be attending today. Some of these chairs may be empty (as some students may be late). When we need nodes to enter, there will be as many empty chairs in the \_groups array as there are nodes that need to enter. (think of entering nodes as always being a little bit late).
@@ -123,7 +124,7 @@ whereas circleSelection returns the whole circle selection, which has the enter 
 circleSelection
   .transition()
   .duration(1500)
-  .attr('r', d => d);
+  .attr('r', d => d)
 ```
 
 but now there is repetition, so how can we say do x to all entering circles and all existing circles?
@@ -138,14 +139,14 @@ const enteringCircles = circleSelection
   .attr('r', '0')
   .attr('stroke', 'salmon')
   .attr('stroke-width', 2)
-  .attr('fill', 'none');
+  .attr('fill', 'none')
 
-const updateSelection = circleSelection.merge(enteringCircles);
+const updateSelection = circleSelection.merge(enteringCircles)
 
 updateSelection
   .transition()
   .duration(1500)
-  .attr('r', d => d);
+  .attr('r', d => d)
 ```
 
 if we try and update circles when we have empty input boxes we get lots of errors in the console. This is because when there are no values in the input boxes we are still passing that as the value for 'r' to equal, so lets add in a condition for the r value.
@@ -154,7 +155,7 @@ if we try and update circles when we have empty input boxes we get lots of error
 updateSelection
   .transition()
   .duration(1500)
-  .attr('r', d => (Number.isInteger(d) ? d : 0));
+  .attr('r', d => (Number.isInteger(d) ? d : 0))
 ```
 
 #### step four - make update work for exiting circles
@@ -163,7 +164,7 @@ currently if we have two input boxes that draw two circles and then we remove on
 where we have been using .enter() there is also .exit()
 
 ```js
-circleSelection.exit().remove();
+circleSelection.exit().remove()
 ```
 
 it removes all the circles we dont need. but we now have the same problem as before where they just disappear, we can get around this in the same way as before when we were entering circles
@@ -174,5 +175,5 @@ circleSelection
   .transition() // this says transition from how they are now to how i am about to change them
   .duration(1500)
   .attr('r', 0)
-  .remove(); // then finally this removes them
+  .remove() // then finally this removes them
 ```
