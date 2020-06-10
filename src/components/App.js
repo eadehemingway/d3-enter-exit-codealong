@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import * as d3 from "d3";
 import styled from "styled-components";
 
 export function App() {
   const [inputValues, setInputValues] = useState([]);
   const svgWidth = 700;
   const svgHeight = 500;
-
-  useEffect(() => {}, []);
 
   function draw() {}
 
