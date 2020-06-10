@@ -7,9 +7,34 @@ export function App() {
   const svgWidth = 700;
   const svgHeight = 500;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    d3.select("#chart").attr("width", svgWidth).attr("height", svgHeight);
+  }, []);
 
-  function draw() {}
+  function draw() {
+    const svg = d3.select("svg");
+    const circleSelection = svg.selectAll("circle").data(inputValues);
+
+    const enteringCircles = circleSelection
+      .enter()
+      .append("circle")
+      .attr("class", "circles")
+      .attr("cx", svgWidth / 2)
+      .attr("cy", svgHeight / 2)
+      .attr("r", 0)
+      .attr("stroke", "salmon")
+      .attr("stroke-width", 2)
+      .attr("fill", "none");
+
+    const updateSelection = circleSelection.merge(enteringCircles);
+
+    updateSelection
+      .transition()
+      .duration(1500)
+      .attr("r", (d) => (d ? d : 0));
+
+    circleSelection.exit().transition().duration(1500).attr("r", 0).remove();
+  }
 
   function addInput() {
     const newinputValues = [...inputValues, ""];

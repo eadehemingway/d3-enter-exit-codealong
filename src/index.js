@@ -1,7 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from "react";
+import ReactDOM from "react-dom";
 // import { App } from './components/App';
-import { App } from './components/Solution'
-import './style.css'
+// import { App } from './components/Solution'
+import { App } from "./components/SolutionHooks";
+import "./style.css";
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(<App />, document.getElementById("app"));
