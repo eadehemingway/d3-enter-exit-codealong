@@ -19,17 +19,13 @@ we have inputValues in state, and this determines how many input boxes appear on
 add variables to the class:
 
 ```js
-  static defaultProps = {
-    svgWidth: 700,
-    svgHeight: 500,
-
-  }
+const svgWidth = 700
+const svgHeight = 500
 ```
 
-then in componentDidMount
+then in useEffect
 
 ```js
-const { svgHeight, svgWidth } = this.props
 d3.select('#chart')
   .append('svg')
   .attr('width', svgWidth)
@@ -46,7 +42,7 @@ the redraw func is going to be triggered when we click the update button. it nee
 
 ```js
 // in draw func
- const {inputValues} = this.state
+
   const svg = d3.select('svg')
   const circleSelection = svg.selectAll('circle').data(inputValues);
 
@@ -72,34 +68,16 @@ circleSelection
   .enter()
   .append('circle')
   .attr('class', 'circles')
-  .attr('cx', this.defaultProps.svgWidth / 2)
-  .attr('cy', this.defaultProps.svgHeight / 2)
-  .attr('r', '0')
+  .attr('cx', svgWidth / 2)
+  .attr('cy', svgHeight / 2)
   .attr('stroke', 'salmon')
   .attr('stroke-width', 2)
   .attr('fill', 'none')
-  .attr('r', d => d)
-```
-
-but this doesnt work! why? because the code runs so quickly that the circle hasnt had time to load with the first r value before the second one is registered, so to see the transition we need to add the transition() property. where shall we add it?
-
-```js
-circleSelection
-  .enter()
-  .append('circle')
-  .attr('class', 'circles')
-  .attr('cx', this.defaultProps.svgWidth / 2)
-  .attr('cy', this.defaultProps.svgHeight / 2)
   .attr('r', '0')
-  .attr('stroke', 'salmon')
-  .attr('stroke-width', 2)
-  .attr('fill', 'none')
   .transition()
   .duration(1500)
-  .attr('r', d => d)
+  .attr('r', (d) => d)
 ```
-
-as before we add the transition between the selection and the code that is changing the selection.
 
 #### step three - make the update work for updating existing circles
 
@@ -124,7 +102,7 @@ whereas circleSelection returns the whole circle selection, which has the enter 
 circleSelection
   .transition()
   .duration(1500)
-  .attr('r', d => d)
+  .attr('r', (d) => d)
 ```
 
 but now there is repetition, so how can we say do x to all entering circles and all existing circles?
@@ -134,8 +112,8 @@ const enteringCircles = circleSelection
   .enter()
   .append('circle')
   .attr('class', 'circles')
-  .attr('cx', this.defaultProps.svgWidth / 2)
-  .attr('cy', this.defaultProps.svgHeight / 2)
+  .attr('cx', svgWidth / 2)
+  .attr('cy', svgHeight / 2)
   .attr('r', '0')
   .attr('stroke', 'salmon')
   .attr('stroke-width', 2)
@@ -146,7 +124,7 @@ const updateSelection = circleSelection.merge(enteringCircles)
 updateSelection
   .transition()
   .duration(1500)
-  .attr('r', d => d)
+  .attr('r', (d) => d)
 ```
 
 if we try and update circles when we have empty input boxes we get lots of errors in the console. This is because when there are no values in the input boxes we are still passing that as the value for 'r' to equal, so lets add in a condition for the r value.
@@ -155,7 +133,7 @@ if we try and update circles when we have empty input boxes we get lots of error
 updateSelection
   .transition()
   .duration(1500)
-  .attr('r', d => (Number.isInteger(d) ? d : 0))
+  .attr('r', (d) => (Number.isInteger(d) ? d : 0))
 ```
 
 #### step four - make update work for exiting circles
